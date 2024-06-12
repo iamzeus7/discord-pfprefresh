@@ -1,11 +1,15 @@
 from flask import Flask, render_template
 import requests
+import os
 
 app = Flask(__name__)
 
+# Definindo o diretório onde o arquivo HTML está localizado
+template_dir = os.path.abspath(os.path.dirname(__file__))
+template_file = os.path.join(template_dir, 'avatar.html')
+
 # IDs dos usuários do Discord cujos avatares queremos buscar
 user_ids = ['677705088822804506', '1044371077041770577', '1145041600980992030']
-
 
 # Função para buscar o avatar de um usuário específico
 def fetch_avatar(user_id):
@@ -26,7 +30,7 @@ def fetch_avatar(user_id):
 def avatar_page(user_id):
     avatar_url = fetch_avatar(user_id)
     if avatar_url:
-        return render_template('avatar.html', avatar_url=avatar_url)
+        return render_template(template_file, avatar_url=avatar_url)
     else:
         return 'Avatar não encontrado'
 
