@@ -6,6 +6,7 @@ app = Flask(__name__)
 # IDs dos usuários do Discord cujos avatares queremos buscar
 user_ids = ['677705088822804506', '1044371077041770577', '1145041600980992030']
 
+
 # Função para buscar o avatar de um usuário específico
 def fetch_avatar(user_id):
     try:
@@ -30,4 +31,4 @@ def avatar_page(user_id):
         return 'Avatar não encontrado'
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=10000, debug=True)
