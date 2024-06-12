@@ -4,9 +4,8 @@ import os
 
 app = Flask(__name__)
 
-# Definindo o diretório onde o arquivo HTML está localizado
-template_dir = os.path.abspath(os.path.dirname(__file__))
-template_file = os.path.join(template_dir, 'avatar.html')
+# Definindo o caminho completo para o arquivo HTML na pasta principal do projeto
+template_file = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'avatar.html')
 
 # IDs dos usuários do Discord cujos avatares queremos buscar
 user_ids = ['677705088822804506', '1044371077041770577', '1145041600980992030']
