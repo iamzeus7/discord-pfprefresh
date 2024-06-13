@@ -1,15 +1,7 @@
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, render_template
 import requests
-import os
 
 app = Flask(__name__, template_folder='')
-
-# Diretório onde os avatares serão salvos
-avatar_directory = ''
-
-# Criar o diretório se não existir
-if not os.path.exists(avatar_directory):
-    os.makedirs(avatar_directory)
 
 # IDs dos usuários do Discord cujos avatares queremos buscar
 user_ids = ['677705088822804506', '1044371077041770577', '1145041600980992030']
@@ -28,47 +20,14 @@ def fetch_avatar(user_id):
         print(f"Erro ao buscar avatar para o usuário {user_id}: {str(e)}")
         return None
 
-# Função para salvar o avatar no servidor
-def save_avatar(user_id, avatar_url):
-    try:
-        # Remover avatar anterior se existir
-        avatar_path = os.path.join(avatar_directory, f"{user_id}.gif")
-        if os.path.exists(avatar_path):
-            os.remove(avatar_path)
-        
-        # Baixar o novo avatar
-        response = requests.get(avatar_url)
-        if response.status_code == 200:
-            with open(avatar_path, 'wb') as f:
-                f.write(response.content)
-            return True
-        else:
-            print(f"Erro ao salvar avatar para o usuário {user_id}. Status Code: {response.status_code}")
-            return False
-    except Exception as e:
-        print(f"Erro ao salvar avatar para o usuário {user_id}: {str(e)}")
-        return False
-
-# Rota para a página inicial (home)
-@app.route('/')
-def home():
-    return render_template('index.html')
-
 # Rota para cada usuário
 @app.route('/<user_id>')
 def avatar_page(user_id):
     avatar_url = fetch_avatar(user_id)
     if avatar_url:
-        # Salvar o avatar no servidor
-        save_avatar(user_id, avatar_url)
-        return render_template('avatar.html', user_id=user_id)
+        return render_template('avatar.html', avatar_url=avatar_url)
     else:
         return 'Avatar não encontrado'
-
-# Rota para servir os avatares estáticos
-@app.route('/avatars/<filename>')
-def serve_avatar(filename):
-    return send_from_directory(avatar_directory, filename)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000, debug=True)
