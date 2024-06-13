@@ -12,7 +12,7 @@ if not os.path.exists(avatar_directory):
     os.makedirs(avatar_directory)
 
 # IDs dos usuários do Discord cujos avatares queremos buscar
-user_ids = ['ID_DO_USUARIO_1', 'ID_DO_USUARIO_2', 'ID_DO_USUARIO_3']
+user_ids = ['677705088822804506', '1044371077041770577', '1145041600980992030']
 
 # Função para buscar o avatar de um usuário específico
 def fetch_avatar(user_id):
