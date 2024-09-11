@@ -3,7 +3,7 @@ import requests
 
 app = Flask(__name__, template_folder='')
 
-# IDs dos usuários do Discord cujos avatares queremos buscar
+# User Ids para serem atualizados
 user_ids = ['677705088822804506', '1044371077041770577', '1145041600980992030']
 
 # Função para buscar o avatar de um usuário específico
